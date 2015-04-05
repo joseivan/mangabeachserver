@@ -21,10 +21,10 @@ loginProtocolPort = 7171
 gameProtocolPort = 7172
 statusProtocolPort = 7171
 maxPlayers = 0
-motd = "Welcome to The Forgotten Server!"
+motd = "Welcome to Mangabeach Server!"
 onePlayerOnlinePerAccount = true
 allowClones = false
-serverName = "Forgotten"
+serverName = "Mangabeach"
 statusTimeout = 5000
 replaceKickOnLogin = true
 maxPacketsPerSecond = 25
@@ -38,7 +38,7 @@ deathLosePercent = -1
 -- Houses
 -- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
 housePriceEachSQM = 1000
-houseRentPeriod = "never"
+houseRentPeriod = "monthly"
 
 -- Item Usage
 timeBetweenActions = 200
@@ -46,8 +46,8 @@ timeBetweenExActions = 1000
 
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
-mapName = "forgotten"
-mapAuthor = "Komic"
+mapName = "Nutopia"
+mapAuthor = "Nugo"
 
 -- Market
 marketOfferDuration = 30 * 24 * 60 * 60
@@ -57,9 +57,9 @@ maxMarketOffersAtATimePerPlayer = 100
 
 -- MySQL
 mysqlHost = "127.0.0.1"
-mysqlUser = "forgottenserver"
-mysqlPass = ""
-mysqlDatabase = "forgottenserver"
+mysqlUser = "mangabeachserver"
+mysqlPass = "mangabeachserver"
+mysqlDatabase = "mangabeachserver"
 mysqlPort = 3306
 mysqlSock = ""
 
@@ -73,11 +73,11 @@ classicEquipmentSlots = false
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
-rateExp = 5
-rateSkill = 3
-rateLoot = 2
-rateMagic = 3
-rateSpawn = 1
+rateExp = 200
+rateSkill = 20
+rateLoot = 20
+rateMagic = 20
+rateSpawn = 5
 
 -- Monsters
 deSpawnRange = 2
@@ -97,7 +97,10 @@ defaultPriority = "high"
 startupDatabaseOptimization = false
 
 -- Status server information
-ownerName = ""
-ownerEmail = ""
-url = "https://otland.net/"
-location = "Sweden"
+ownerName = "Sem.iNick"
+ownerEmail = "ivanfilho2204@hotmail.com"
+url = "https://mangabeach.com.br"
+location = "Brazil"
+
+-- Deprecated
+passwordType = "sha1"

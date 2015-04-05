@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
+project(mangabeachserver)
 
-set(CMAKE_DISABLE_SOURCE_CHANGES ON)
-set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
-
-project(tfs)
+#set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+#set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -40,11 +39,11 @@ endif()
 find_package(Boost 1.42.0 COMPONENTS system REQUIRED)
 
 include(src/CMakeLists.txt)
-add_executable(tfs ${tfs_SRC})
+add_executable(mangabeachserver ${mangabeachserver_SRC})
 
 include_directories(${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${GMP_INCLUDE_DIR})
-target_link_libraries(tfs ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(mangabeachserver ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
-set_target_properties(tfs PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/otpch.h")
-set_target_properties(tfs PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
-cotire(tfs)
+set_target_properties(mangabeachserver PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/otpch.h")
+set_target_properties(mangabeachserver PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
+cotire(mangabeachserver)

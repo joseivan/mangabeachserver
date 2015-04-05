@@ -32,7 +32,8 @@ bool Ban::acceptConnection(uint32_t clientip)
 
 	auto it = ipConnectMap.find(clientip);
 	if (it == ipConnectMap.end()) {
-		ipConnectMap.emplace(clientip, ConnectBlock(currentTime, 0, 1));
+		//ipConnectMap.emplace(clientip, ConnectBlock(currentTime, 0, 1));
+		ipConnectMap.insert(std::pair<uint32_t, ConnectBlock>(clientip, ConnectBlock(currentTime, 0, 1)));
 		return true;
 	}
 

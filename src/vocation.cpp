@@ -42,9 +42,19 @@ bool Vocations::loadFromXml()
 
 		uint16_t id = pugi::cast<uint16_t>(attr.value());
 
+#if 0
 		auto res = vocationsMap.emplace(id, id);
 		Vocation& voc = res.first->second;
+#endif
 
+		std::map<uint16_t, Vocation>::iterator it = vocationsMap.find(id);
+		if (it == vocationsMap.end()) {
+
+			vocationsMap.insert(std::pair<uint16_t, Vocation>(id, Vocation(id)));
+			it = vocationsMap.find(id);
+		}
+
+		Vocation& voc = it->second;
 		if ((attr = vocationNode.attribute("name"))) {
 			voc.name = attr.as_string();
 		}

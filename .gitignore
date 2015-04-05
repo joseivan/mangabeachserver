@@ -1,3 +1,9 @@
+### cmake Generated Filed ###
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cotire
+*.cmake
 #################
 ## Visual Studio
 #################
@@ -169,3 +175,5 @@ pip-log.txt
 .*.swp
 .*.swo
 
+# Bin
+mangabeachserver
