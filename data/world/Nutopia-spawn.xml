@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
 <spawns>
+
+	<!-- NPC -->
+	<spawn centerx="963" centery="1059" centerz="6" radius="1">
+		<npc name="Ivan" />
+	</spawn>
+	
+	<!-- Monsters -->
 	<spawn centerx="1390" centery="1009" centerz="2" radius="5">
 		<monster name="Terrorsleep" x="1" y="0" z="2" spawntime="60" />
 	</spawn>

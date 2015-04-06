@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Ivan" script="default.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100"/>
+	<look type="134" head="57" body="59" legs="40" feet="76" addons="0"/>
+	<parameters>
+		<parameter key="module_shop" value="1"/>
+		<parameter key="shop_sellable" value="bag,1987,5;backpack,1988,10;rope,2120,5;shovel,2554,5"/>
+		<parameter key="shop_buyable" value="bag,1987,15;backpack,1988,25;rope,2120,10;shovel,2554,15;torch,2050,5"/>
+	</parameters>
+</npc>
