@@ -1537,7 +1537,7 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 	if (shop.size() <= 5) {
 		// For very small shops it's not worth it to create the complete map
 		for (const ShopInfo& shopInfo : shop) {
-			if (shopInfo.sellPrice > 0) {
+			if (shopInfo.sellPrice != 0) {
 				int8_t subtype = -1;
 
 				const ItemType& itemType = Item::items[shopInfo.itemId];
@@ -1562,7 +1562,7 @@ void ProtocolGame::sendSaleItemList(const std::list<ShopInfo>& shop)
 		// (That is, fluids such as potions etc., actually these items are very few since
 		// health potions now use their own ID)
 		for (const ShopInfo& shopInfo : shop) {
-			if (shopInfo.sellPrice > 0) {
+			if (shopInfo.sellPrice != 0) {
 				int8_t subtype = -1;
 
 				const ItemType& itemType = Item::items[shopInfo.itemId];
@@ -2278,7 +2278,7 @@ void ProtocolGame::sendCreatureHealth(const Creature* creature)
 	if (creature->isHealthHidden()) {
 		msg.addByte(0x00);
 	} else {
-		msg.addByte(static_cast<int32_t>(std::ceil(static_cast<float>(creature->getHealth() * 100) / std::max<int32_t>(creature->getMaxHealth(), 1))));
+		msg.addByte(std::ceil((static_cast<double>(creature->getHealth()) / std::max<int32_t>(creature->getMaxHealth(), 1)) * 100));
 	}
 	writeToOutputBuffer(msg);
 }
@@ -2819,7 +2819,7 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 	if (creature->isHealthHidden()) {
 		msg.addByte(0x00);
 	} else {
-		msg.addByte(static_cast<int32_t>(std::ceil(static_cast<float>(creature->getHealth() * 100) / std::max<int32_t>(creature->getMaxHealth(), 1))));
+		msg.addByte(std::ceil((static_cast<double>(creature->getHealth()) / std::max<int32_t>(creature->getMaxHealth(), 1)) * 100));
 	}
 
 	msg.addByte(creature->getDirection());

@@ -319,7 +319,7 @@ Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 	}
 
 	WeaponType_t weaponType = item->getWeaponType();
-	if (weaponType == WEAPON_NONE || weaponType == WEAPON_AMMO) {
+	if (weaponType == WEAPON_NONE || weaponType == WEAPON_SHIELD || weaponType == WEAPON_AMMO) {
 		return nullptr;
 	}
 
@@ -645,8 +645,8 @@ void Player::setVarStats(stats_t stat, int32_t modifier)
 int32_t Player::getDefaultStats(stats_t stat) const
 {
 	switch (stat) {
-		case STAT_MAXHITPOINTS: return getMaxHealth() - varStats[STAT_MAXHITPOINTS];
-		case STAT_MAXMANAPOINTS: return getMaxMana() - varStats[STAT_MAXMANAPOINTS];
+		case STAT_MAXHITPOINTS: return healthMax;
+		case STAT_MAXMANAPOINTS: return manaMax;
 		case STAT_MAGICPOINTS: return getBaseMagicLevel();
 		default: return 0;
 	}
@@ -1037,10 +1037,9 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 		}
 
 		uint16_t slot = openContainer.index;
-
 		if (container->getID() == ITEM_BROWSEFIELD) {
 			uint16_t containerSize = container->size() - 1;
-			uint16_t pageEnd = openContainer.index + container->capacity();
+			uint16_t pageEnd = openContainer.index + container->capacity() - 1;
 			if (containerSize > pageEnd) {
 				slot = pageEnd;
 				item = container->getItemByIndex(pageEnd);
@@ -1050,7 +1049,6 @@ void Player::sendAddContainerItem(const Container* container, const Item* item)
 		} else if (openContainer.index >= container->capacity()) {
 			item = container->getItemByIndex(openContainer.index - 1);
 		}
-
 		client->sendAddContainerItem(it.first, slot, item);
 	}
 }
@@ -1184,8 +1182,6 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 		int16_t oldStaminaMinutes = getStaminaMinutes();
 
 		if (offlineTrainingSkill != -1) {
-			setOfflineTrainingSkill(-1);
-
 			if (offlineTime >= 600) {
 				uint32_t trainingTime = std::max<int32_t>(0, std::min<int32_t>(offlineTime, std::min<int32_t>(43200, offlineTrainingTime / 1000)));
 
@@ -1259,6 +1255,7 @@ void Player::onCreatureAppear(Creature* creature, bool isLogin)
 			} else {
 				sendTextMessage(MESSAGE_EVENT_ADVANCE, "You must be logged out for more than 10 minutes to start offline training.");
 			}
+			setOfflineTrainingSkill(-1);
 		} else {
 			uint16_t oldMinutes = getOfflineTrainingTime() / 60 / 1000;
 			addOfflineTrainingTime(offlineTime * 1000);
@@ -3265,9 +3262,9 @@ void Player::postRemoveNotification(Thing* thing, const Cylinder* newParent, int
 
 bool Player::updateSaleShopList(const Item* item)
 {
-	uint32_t itemId = item->getID();
+	uint16_t itemId = item->getID();
 	if (itemId != ITEM_GOLD_COIN && itemId != ITEM_PLATINUM_COIN && itemId != ITEM_CRYSTAL_COIN) {
-		auto it = std::find_if(shopItemList.begin(), shopItemList.end(), [itemId](const ShopInfo& shopInfo) { return shopInfo.itemId == itemId; });
+		auto it = std::find_if(shopItemList.begin(), shopItemList.end(), [itemId](const ShopInfo& shopInfo) { return shopInfo.itemId == itemId && shopInfo.sellPrice != 0; });
 		if (it == shopItemList.end()) {
 			const Container* container = item->getContainer();
 			if (!container) {
